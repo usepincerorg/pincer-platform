@@ -1,0 +1,266 @@
+/*
+ * The demo window (StepWindow.tsx): a browser window whose stage is the app
+ * drawn at 1200 × 750 and scaled to fit by --k, and the steps in a bar along
+ * its foot. Everything the app draws uses the site's own classes; this is
+ * only the frame, the pointer and the bar. Every class here starts with hd-.
+ */
+.hd {
+  display: grid;
+}
+
+.hd-win {
+  position: relative;
+  /* A <figure> keeps a 40 px side margin by default: on a phone that is 80 px gone. */
+  margin: 0;
+  border-radius: 18px;
+  background: #0a0d12;
+  box-shadow:
+    0 0 0 1px rgb(226 231 244 / 0.12),
+    0 1px 0 rgb(255 255 255 / 0.08) inset,
+    0 50px 120px -50px rgb(0 0 0 / 0.9),
+    0 30px 60px -30px rgb(0 0 0 / 0.6);
+  overflow: hidden;
+}
+
+/* The bar: window controls, the tab, the address of the step that plays. */
+.hd-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 14px;
+  background: linear-gradient(180deg, rgb(226 231 244 / 0.06), rgb(226 231 244 / 0.025)), #0d1117;
+  border-bottom: 1px solid rgb(226 231 244 / 0.07);
+  font: 500 12px/1 var(--font-sans);
+  color: var(--color-fog);
+  white-space: nowrap;
+}
+
+/* An unfocused window's controls: grey, so the page keeps one accent. */
+.hd-lights {
+  display: flex;
+  gap: 7px;
+  margin-right: 4px;
+}
+
+.hd-lights i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgb(226 231 244 / 0.16);
+}
+
+.hd-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border-radius: 8px;
+  color: var(--color-navy);
+  background: rgb(226 231 244 / 0.07);
+}
+
+.hd-url {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font: 400 11.5px/1 var(--font-mono);
+  color: var(--color-fog);
+}
+
+.hd-gap {
+  flex: 1;
+}
+
+/* The stage: the app at its design size, scaled as a whole. */
+.hd-view {
+  --k: 0.6;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--color-canvas);
+}
+
+.hd-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1200px;
+  height: 750px;
+  overflow: hidden;
+  transform: scale(var(--k));
+  transform-origin: 0 0;
+  background:
+    radial-gradient(700px 420px at 88% 0%, rgb(180 189 214 / 0.07), transparent 70%),
+    var(--color-canvas);
+  color: var(--color-navy);
+  font: 400 13px/1.45 var(--font-sans);
+  text-align: left;
+  user-select: none;
+  /* A demo, not the app: nothing in it takes a click. */
+  pointer-events: none;
+  -webkit-font-smoothing: antialiased;
+  animation: hd-in 0.45s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+/* A frozen frame (for screenshots) shows at once, with no fade. */
+.hd-frozen .hd-stage {
+  animation: none;
+}
+
+@keyframes hd-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* The pointer: placed from t by glide(), and pressed. */
+.hd-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  width: 32px;
+  height: 32px;
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.25, 1), ease;
+}
+
+.hd-cursor svg {
+  display: block;
+  overflow: visible;
+  transform-origin: 5px 5px;
+  transform: scale(1.15);
+  transition: transform 0.1s;
+  filter: drop-shadow(0 1px 1.2px rgb(0 0 0 / 0.35));
+}
+
+.hd-cursor.away {
+  opacity: 0;
+}
+
+.hd-cursor.press svg {
+  transform: scale(0.98);
+}
+
+/* The steps along the foot: a number, a name and a line that fills. */
+.hd-steps {
+  display: flex;
+  gap: 2px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #0d1117;
+  border-top: 1px solid rgb(226 231 244 / 0.07);
+}
+
+.hd-steps li {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.hd-steps button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-width: 0;
+  padding: 9px 12px 11px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font: 500 13px/1.5 var(--font-sans);
+  color: var(--color-fog);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+
+.hd-steps button:hover,
+.hd-steps button.on {
+  color: var(--color-navy);
+}
+
+.hd-steps button:hover {
+  background: rgb(226 231 244 / 0.05);
+}
+
+.hd-steps button:focus-visible {
+  outline: 2px solid var(--color-lagoon);
+  outline-offset: -2px;
+}
+
+.hd-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hd-n {
+  flex: none;
+  font: 400 11px/1 var(--font-mono);
+  color: var(--color-pale);
+}
+
+.hd-steps button.on .hd-n {
+  color: var(--color-fog);
+}
+
+/* The step's line, filled as far as it has played. */
+.hd-steps i {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 4px;
+  height: 1.5px;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, var(--color-sky) calc(var(--p) * 100%), transparent calc(var(--p) * 100%)),
+    rgb(226 231 244 / 0.08);
+}
+
+.hd-steps button:not(.on) i {
+  opacity: 0.55;
+}
+
+@media (max-width: 560px) {
+  .hd-bar {
+    height: 32px;
+    gap: 7px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  .hd-lights {
+    gap: 5px;
+  }
+  .hd-lights i {
+    width: 8px;
+    height: 8px;
+  }
+  .hd-url {
+    display: none;
+  }
+  .hd-steps button {
+    gap: 5px;
+    padding: 8px 6px 10px;
+    font-size: 11px;
+  }
+  .hd-n {
+    display: none;
+  }
+}
+
+/* Less motion: the end frames stand still, and nothing animates on top. */
+@media (prefers-reduced-motion: reduce) {
+  .hd-stage,
+  .hd-stage *,
+  .hd-cursor,
+  .hd-cursor svg {
+    animation: none !important;
+    transition: none !important;
+  }
+}
