@@ -1,0 +1,239 @@
+/* The intro film: a fixed 1920 × 1080 stage. Nothing in it animates by itself; t draws every frame. */
+/* The dev build's indicator stays out of the frame */
+nextjs-portal {
+  display: none !important;
+}
+
+.film,
+.film * {
+  transition: none !important;
+  animation: none !important;
+}
+
+.film {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  background: #04060a;
+  color: var(--color-navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+.film .bgl {
+  position: absolute;
+  inset: -2%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform, opacity;
+}
+
+.film .vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(1400px 900px at 50% 50%, transparent 55%, rgb(3 5 9 / 0.75) 100%);
+}
+
+.film .grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background: var(--grain);
+  background-size: 360px;
+}
+
+.film .scene {
+  position: absolute;
+  inset: 0;
+}
+
+.film .center-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.film .corner-copy {
+  position: absolute;
+}
+
+.film .headline {
+  margin: 0;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  color: #f1f3f8;
+  text-shadow: 0 2px 40px rgb(0 0 0 / 0.35);
+}
+
+.film .fw {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+/* The quieter half of a headline, as on the site */
+.film .quiet-grad .fw,
+.film .quiet-grad.fw {
+  color: #9aa2b4;
+}
+
+.film .brand {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #f1f3f8;
+}
+
+.film .halo {
+  position: absolute;
+  width: 1100px;
+  height: 520px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgb(3 6 14 / 0.75), transparent);
+}
+
+.film .url {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 36px;
+  letter-spacing: -0.01em;
+  color: #a8afbf;
+}
+
+/* Scene 3 */
+.film .win-wrap {
+  position: absolute;
+  transform-origin: 70% 50%;
+}
+
+.film .film-win {
+  box-shadow:
+    0 0 0 1px rgb(226 231 244 / 0.14),
+    0 1px 0 rgb(255 255 255 / 0.1) inset,
+    0 80px 160px -60px rgb(0 0 0 / 0.95),
+    0 40px 80px -40px rgb(10 30 90 / 0.5);
+}
+
+.film .win-shadow {
+  position: absolute;
+  width: 1150px;
+  height: 820px;
+  border-radius: 40px;
+  background: radial-gradient(closest-side, rgb(2 4 10 / 0.8), transparent);
+  filter: blur(30px);
+}
+
+.film .caption {
+  position: absolute;
+  left: 100px;
+  top: 0;
+  bottom: 0;
+  width: 500px;
+}
+
+.film .cap {
+  position: absolute;
+  left: 0;
+  top: 390px;
+  width: 520px;
+  text-align: left;
+}
+
+.film .steps {
+  position: absolute;
+  left: 4px;
+  top: 630px;
+  display: flex;
+  gap: 10px;
+}
+
+.film .steps i {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgb(226 231 244 / 0.14);
+}
+
+.film .steps b {
+  position: absolute;
+  inset: 0;
+  background: #dde2ef;
+  transform-origin: 0 50%;
+}
+
+/* Scene 4 */
+.film .feed {
+  position: absolute;
+  right: 110px;
+  bottom: 96px;
+  width: 760px;
+  height: 548px;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.film .feed-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 26px 30px 20px;
+  border-bottom: 1px solid rgb(226 231 244 / 0.07);
+}
+
+.film .feed-title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.film .feed-sub {
+  margin-top: 4px;
+  font-size: 16px;
+  color: var(--color-fog);
+}
+
+.film .feed-co {
+  border-radius: 999px;
+  border: 1px solid rgb(226 231 244 / 0.12);
+  background: rgb(226 231 244 / 0.05);
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-tide);
+}
+
+.film .feed-list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.film .feed-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 30px;
+  border-bottom: 1px solid rgb(226 231 244 / 0.06);
+}
+
+.film .zoom {
+  position: absolute;
+  inset: 0;
+}
