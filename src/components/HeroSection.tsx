@@ -21,6 +21,8 @@ export function HeroSection() {
           <p className="animate-reveal delay-3 mx-auto mt-8 max-w-[640px] text-[17px] leading-[1.6] text-tide md:text-[19px]">
             Pincer lets a private company issue its shares as tokens on Robinhood Chain. The token tests every transfer against the company&apos;s rules
             before it settles, and every issuance, offering and corporate action is recorded where anyone can check it.
+            <br/>
+            $PINCER - 0xba57cec7bbea1b3ca81b8e2e69f11d242b474fd3
           </p>
           <div className="animate-reveal delay-4 mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href={SITE.appHref} className="btn btn-primary btn-lg">
